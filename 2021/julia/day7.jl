@@ -1,17 +1,14 @@
 function day7()
-nums = parse.(Int, split(readline("../data/input7.txt"), ","))
+    nums = parse.(Int, split(readline("../data/input7.txt"), ","))
 
-xmax = maximum(nums)
-minimiser2 = Inf
-cost2 = Inf
-med = Int(round(median(nums)))
-cost1 = sum(abs(med - n) for n in nums)
-@inbounds for x in 0:xmax
-    d2 = sum((x-i)^2+abs(x-i) for i in nums)
-    if d2 < cost2
-        cost2 = d2
-        minimiser2 = x
-    end
-end
-return cost1, cost2÷2
+    med = round(Int, median(nums))
+    cost1 = sum(abs(med - n) for n in nums)
+
+    μ = mean(nums)
+    μ_floor = floor(Int, μ)
+    μ_ceil = ceil(Int, μ)
+    cost21 = sum(sum(1:abs(μ_floor - n)) for n in nums)
+    cost22 = sum(sum(1:abs(μ_ceil - n)) for n in nums)
+
+    return cost1, min(cost21, cost22)
 end
