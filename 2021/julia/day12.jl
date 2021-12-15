@@ -40,8 +40,7 @@ function part2(g, src="start", npaths=0, visited=Set{String}(), twice=[""])
     for sink in g[src]
         if sink ∉ visited
             npaths = part2(g, sink, npaths, visited, twice)
-        elseif twice[1] == ""
-            sink == "start" && continue
+        elseif isempty(twice[1]) && sink != "start"
             twice[1] = sink
             npaths = part2(g, sink, npaths, visited, twice)
         end
